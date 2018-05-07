@@ -1,0 +1,31 @@
+{
+  "name": "planetario",
+  "version": "1.0.0",
+  "description": "Sistema Planetário",
+  "main": "index.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adrianoucsal/planetario_nodes.git"
+  },
+  "keywords": [
+    "NodesJs",
+    "Sistema",
+    "Solar",
+    "Planetas"
+  ],
+  "author": "Adriano Rodrigues de Souza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adrianoucsal/planetario_nodes/issues"
+  },
+  "homepage": "https://github.com/adrianoucsal/planetario_nodes#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "consign": "^0.1.6",
+    "express": "^4.16.3",
+    "express-validator": "^5.1.2"
+  }
+}
