@@ -13,7 +13,7 @@ module.exports = function(){
 
   consign()
    .include('controllers')
-   .then('persistencia')
+   .then('model')
    .into(app);
 
   return app;
