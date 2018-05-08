@@ -1,17 +1,26 @@
 var oracledb = require('oracledb')
-function PlanetarioDAO(connection) {
-    this._connection = connection
+var createDBConnection = require('./connectionDB')()
+
+function PlanetarioDAO() {
 }
 
-PlanetarioDAO.prototype.listPlaneta = function(callback){
-    this._connection.execute('select * from planeta'
+PlanetarioDAO.prototype.listPlaneta = async function(callback){
+    console.log('DB Connection' + createDBConnection)
+    var connection = await createDBConnection()
+    console.log('Connection' + connection)
+    connection.execute('select * from planeta'
     ,{}
     ,{outFormat: oracledb.OBJECT}
-    ,callback);
+    ,(erro, resultado) => {
+        callback(erro,resultado)
+        releaseConnection(connection)
+    });
+
 }
 
-PlanetarioDAO.prototype.getPlaneta = function(id, callback){
-    this._connection.execute('select * from planeta where id = :id'
+PlanetarioDAO.prototype.getPlaneta = async function(id, callback){
+    var connection = await createDBConnection()
+    connection.execute('select * from planeta where id = :id'
     ,[id]
     ,{outFormat: oracledb.OBJECT}
     ,callback);
@@ -19,4 +28,17 @@ PlanetarioDAO.prototype.getPlaneta = function(id, callback){
 
 module.exports = function(){
     return PlanetarioDAO
+}
+
+/* Release Connection */
+function releaseConnection(connection){
+    connection.release(
+        function (err){
+            if(err){
+                console.error(err)
+            } else {
+                console.log('Conexão Liberada')   
+            }
+        }
+    )    
 }
