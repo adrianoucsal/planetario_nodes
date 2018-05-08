@@ -56,7 +56,7 @@ module.exports = function(app) {
             })
 
         app.post('/planetario/getPlanetasGalaxia/', function(req, res) {
-            console.log('retorna os galaxiass')
+            console.log('retorna os planetas')
     
             res.setHeader('Access-Control-Allow-Origin', "*");
             res.setHeader('Access-Control-Allow-Methods', 'POST');

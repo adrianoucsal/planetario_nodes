@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=800, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-1.11.3.js" crossorigin="anonymous"></script>
+    <script>
+
+        jQuery("document").ready(function(){
+            var host = "http://localhost:4000/"
+            jQuery.post(host + "planetario/galaxia","{}",                 
+                function(data, status){
+                    data.unshift({"ID" : "", "NOME" : "Selecione a Galaxia"})
+                    setSelector("listGalaxia",data);
+                }
+            );
+
+            jQuery("#listGalaxia").change(function(){                
+                reloadPlaneta(jQuery("#listGalaxia option:selected").attr("value"))              
+            })
+
+            jQuery("#listPlaneta").change(function(){                
+                reloadContinente(jQuery("#listPlaneta option:selected").attr("value"))              
+            })
+
+
+            function reloadPlaneta(id){
+                jQuery.post(host + "planetario/getPlanetasGalaxia",{"id": id}, 
+                    function(data, status){
+                        setSelector("listPlaneta",data);
+                        reloadContinente(jQuery("#listPlaneta option:selected").attr("value"))
+                    }
+                );                     
+            }
+
+            function reloadContinente(id){
+                jQuery.post(host + "planetario/getContinentesPlaneta",{"id": id}, 
+                    function(data, status){
+                        setSelector("listContinente",data);
+                    }
+                );                     
+            }
+
+
+        });
+
+        function setSelector(selector, data){
+            $("#" + selector).empty()
+            jQuery.each(data, function(index, value){                
+                $("#" + selector).append(new Option(value.NOME, value.ID));
+            });
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <span>Galaxia</span>
+        <select name="galaxia" id="listGalaxia"></select>
+    </div>
+    
+    <div>
+        <span>Planeta</span>
+        <select name="planeta" id="listPlaneta"></select>
+    </div>
+
+    <div>
+        <span>Continente</span>
+        <select name="continente" id="listContinente"></select>
+    </div>
+    <div>
+        <span>País</span>
+        <select name="pais" id="listPais"></select>
+    </div>
+        
+        
+</body>
+</html>
